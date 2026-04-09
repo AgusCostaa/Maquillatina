@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Maquillatina — Agustina Costa</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ══════════════════════════════════════════
+   VARIABLES & RESET
+══════════════════════════════════════════ */
+:root {
+  --negro: #0F0F0F;
+  --gris: #6E6E6E;
+  --gris-claro: #9e9e9e;
+  --beige: #F2EDE7;
+  --beige-oscuro: #e8e1d9;
+  --rosa: #E8B4B8;
+  --durazno: #F4C8B6;
+  --blanco: #FFFFFF;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Inter', Helvetica, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--blanco);
+  color: var(--negro);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ══ UTILIDADES ══ */
+.container { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+.container--wide { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+.section { padding: 96px 0; }
+.section-label {
+  font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gris); display: block; margin-bottom: 16px;
+}
+.section-label--rosa { color: var(--rosa); }
+
+/* ══ REVEAL ══ */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(30px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ══ BOTONES ══ */
+.btn {
+  display:inline-block; font-family:var(--sans); font-size:13px;
+  font-weight:600; letter-spacing:.09em; text-transform:uppercase;
+  text-decoration:none; padding:16px 36px; border-radius:2px;
+  transition:background .25s, transform .2s, box-shadow .25s;
+  cursor:pointer; border:none;
+}
+.btn--negro { background:var(--negro); color:var(--blanco); }
+.btn--negro:hover { background:#2a2a2a; transform:translateY(-2px); box-shadow:0 8px 28px rgba(15,15,15,.18); }
+.btn--rosa { background:var(--rosa); color:var(--negro); }
+.btn--rosa:hover { background:#dda4a8; transform:translateY(-2px); box-shadow:0 8px 28px rgba(232,180,184,.35); }
+.btn--outline { background:transparent; color:var(--negro); border:1.5px solid var(--negro); }
+.btn--outline:hover { background:var(--negro); color:var(--blanco); }
+.btn--outline-blanco { background:transparent; color:var(--blanco); border:1.5px solid rgba(255,255,255,.4); }
+.btn--outline-blanco:hover { background:var(--blanco); color:var(--negro); }
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  padding: 20px 28px;
+  display:flex; align-items:center; justify-content:space-between;
+  transition: background .3s, box-shadow .3s;
+}
+nav.scrolled {
+  background: rgba(242,237,231,0.96);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 #e0d9d1;
+}
+.nav__logo {
+  font-family: var(--serif); font-size:20px; font-weight:700;
+  color:var(--negro); text-decoration:none; letter-spacing:.02em;
+}
+.nav__logo em { font-style:italic; color:var(--gris); font-weight:400; }
+.nav__links { display:flex; gap:28px; align-items:center; }
+.nav__links a {
+  font-size:12px; font-weight:500; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--negro); text-decoration:none;
+  transition:color .2s; opacity:.7;
+}
+.nav__links a:hover { opacity:1; color:var(--negro); }
+.nav__cta {
+  font-size:12px; font-weight:600; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--negro); text-decoration:none;
+  padding:10px 22px; border:1.5px solid var(--negro); border-radius:2px;
+  transition:background .2s, color .2s; opacity:1 !important;
+}
+.nav__cta:hover { background:var(--negro); color:var(--blanco); }
+.nav__hamburger {
+  display:none; flex-direction:column; gap:5px; cursor:pointer;
+  background:none; border:none; padding:4px;
+}
+.nav__hamburger span {
+  display:block; width:22px; height:1.5px;
+  background:var(--negro); transition:transform .3s, opacity .3s;
+}
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.hero {
+  min-height: 100svh;
+  background: var(--beige);
+  display:flex; align-items:center; justify-content:center;
+  padding: 120px 28px 80px;
+  position:relative; overflow:hidden;
+  text-align:center;
+}
+.hero::before {
+  content:''; position:absolute; top:-160px; right:-160px;
+  width:520px; height:520px; border-radius:50%;
+  background:radial-gradient(circle, var(--durazno) 0%, transparent 68%);
+  opacity:.4; pointer-events:none;
+}
+.hero::after {
+  content:''; position:absolute; bottom:-100px; left:-100px;
+  width:400px; height:400px; border-radius:50%;
+  background:radial-gradient(circle, var(--rosa) 0%, transparent 68%);
+  opacity:.3; pointer-events:none;
+}
+.hero__inner {
+  position:relative; z-index:1; max-width:640px; margin:0 auto;
+  animation: fadeUp .9s ease both;
+}
+.hero__eyebrow {
+  font-size:11px; letter-spacing:.25em; text-transform:uppercase;
+  color:var(--gris); margin-bottom:24px; display:block;
+}
+.hero__title {
+  font-family:var(--serif); font-size:clamp(40px,7vw,76px);
+  font-weight:700; line-height:1.05; color:var(--negro); margin-bottom:8px;
+}
+.hero__title em { font-style:italic; font-weight:400; color:var(--gris); }
+.hero__subtitle {
+  font-family:var(--serif); font-size:clamp(16px,2vw,22px);
+  font-style:italic; color:var(--gris); margin-bottom:28px;
+  line-height:1.4;
+}
+.hero__divider { width:40px; height:2px; background:var(--rosa); margin:0 auto 28px; }
+.hero__desc {
+  font-size:16px; font-weight:300; color:var(--gris);
+  line-height:1.7; margin-bottom:44px; max-width:460px; margin-left:auto; margin-right:auto;
+}
+.hero__btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+
+/* ══════════════════════════════════════════
+   SOBRE MÍ (intro rápida)
+══════════════════════════════════════════ */
+.sobre-intro { background:var(--blanco); padding:96px 0; }
+.sobre-intro__inner {
+  max-width:760px; margin:0 auto; padding:0 28px;
+  display:grid; grid-template-columns:200px 1fr; gap:60px; align-items:center;
+}
+.sobre-intro__foto {
+  width:200px; height:260px; border-radius:6px; overflow:hidden; flex-shrink:0;
+  background:linear-gradient(145deg, var(--rosa) 0%, var(--durazno) 100%);
+}
+.sobre-intro__foto img {
+  width:100%; height:100%; object-fit:cover; object-position:center top; display:block;
+}
+.sobre-intro__foto-placeholder {
+  width:100%; height:100%; display:flex; align-items:center;
+  justify-content:center; font-size:52px;
+}
+.sobre-intro__name {
+  font-family:var(--serif); font-size:clamp(26px,3.5vw,36px);
+  font-weight:700; line-height:1.1; margin-bottom:6px;
+}
+.sobre-intro__handle {
+  font-size:13px; color:var(--gris); letter-spacing:.08em;
+  text-transform:uppercase; margin-bottom:20px; display:block;
+}
+.sobre-intro__bio {
+  font-size:15px; color:var(--gris); line-height:1.8; margin-bottom:24px;
+}
+.sobre-intro__tags { display:flex; flex-wrap:wrap; gap:8px; }
+.sobre-intro__tag {
+  font-size:11px; font-weight:600; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--negro); background:var(--rosa); padding:6px 14px;
+  border-radius:1px; opacity:.85;
+}
+
+/* ══════════════════════════════════════════
+   CARRUSEL
+══════════════════════════════════════════ */
+.carrusel-section { background:var(--negro); padding:80px 0 0; overflow:hidden; }
+.carrusel-section .section-label { color:var(--rosa); }
+.carrusel-section__header { padding:0 28px 48px; max-width:760px; margin:0 auto; }
+.carrusel-section__title {
+  font-family:var(--serif); font-size:clamp(28px,4vw,44px);
+  font-weight:600; color:var(--blanco); line-height:1.2; max-width:440px;
+}
+
+.carrusel {
+  display:flex; gap:12px; overflow-x:auto; padding:0 28px 48px;
+  scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.carrusel::-webkit-scrollbar { display:none; }
+.carrusel__item {
+  flex-shrink:0; width:280px; height:360px;
+  border-radius:4px; overflow:hidden; scroll-snap-align:start;
+  position:relative; cursor:pointer;
+  transition:transform .3s;
+  background: #1a1a1a;
+}
+.carrusel__item img {
+  width:100%; height:100%; object-fit:cover; object-position:center top;
+  display:block; transition:transform .4s ease;
+}
+.carrusel__item:hover { transform:scale(1.02); }
+.carrusel__item:hover img { transform:scale(1.04); }
+.carrusel__placeholder {
+  width:100%; height:100%;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:12px;
+}
+.carrusel__placeholder-icon { font-size:32px; opacity:.4; }
+.carrusel__placeholder-label {
+  font-size:11px; letter-spacing:.15em; text-transform:uppercase;
+  color:rgba(255,255,255,.3);
+}
+.carrusel__overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(15,15,15,.7) 0%, transparent 60%);
+  opacity:0; transition:opacity .3s;
+  display:flex; align-items:flex-end; padding:20px;
+}
+.carrusel__item:hover .carrusel__overlay { opacity:1; }
+.carrusel__overlay-text {
+  font-size:13px; color:var(--blanco); font-style:italic;
+  font-family:var(--serif); line-height:1.4;
+}
+
+/* paleta de colores de fondo para placeholders */
+.c1 { background: #1e1a1a; }
+.c2 { background: #1a1618; }
+.c3 { background: #201c1a; }
+.c4 { background: #1c1a1e; }
+.c5 { background: #1a1c1e; }
+.c6 { background: #1e1a1c; }
+
+.carrusel__dots {
+  display:flex; gap:6px; justify-content:center; padding-bottom:48px;
+}
+.carrusel__dot {
+  width:6px; height:6px; border-radius:50%;
+  background:rgba(255,255,255,.2); cursor:pointer; transition:background .2s, transform .2s;
+  border:none;
+}
+.carrusel__dot.active { background:var(--rosa); transform:scale(1.3); }
+
+/* ══════════════════════════════════════════
+   GALERÍA GRID
+══════════════════════════════════════════ */
+.galeria { background:var(--beige); padding:96px 0; }
+.galeria__header { max-width:760px; margin:0 auto 52px; padding:0 28px; }
+.galeria__title {
+  font-family:var(--serif); font-size:clamp(28px,4vw,42px);
+  font-weight:600; line-height:1.2;
+}
+.galeria__grid {
+  max-width:1100px; margin:0 auto; padding:0 28px;
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap:8px;
+}
+.galeria__cell {
+  border-radius:3px; overflow:hidden;
+  background:var(--beige-oscuro);
+  position:relative; cursor:pointer;
+  transition:transform .3s, box-shadow .3s;
+  min-height: 240px;
+}
+.galeria__cell:hover { transform:scale(1.015); box-shadow:0 16px 48px rgba(15,15,15,.12); }
+.galeria__cell--tall { grid-row: span 2; }
+.galeria__cell--wide { grid-column: span 2; }
+.galeria__cell img {
+  width:100%; height:100%; object-fit:cover; object-position:center top;
+  display:block; transition:transform .45s ease;
+  position:absolute; inset:0;
+}
+.galeria__cell--tall { min-height: 500px; }
+.galeria__cell--wide img { object-position: center 30%; }
+.galeria__cell:hover img { transform:scale(1.05); }
+
+/* ══════════════════════════════════════════
+   SERVICIOS
+══════════════════════════════════════════ */
+.servicios { background:var(--blanco); padding:96px 0; }
+.servicios__header { margin-bottom:56px; }
+.servicios__title {
+  font-family:var(--serif); font-size:clamp(28px,4vw,42px);
+  font-weight:600; line-height:1.2; max-width:460px;
+}
+.servicios__nota {
+  margin-top:12px; font-size:14px; color:var(--gris); line-height:1.6;
+}
+.servicios__grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; }
+.servicio__card {
+  border:1.5px solid #ede8e2; padding:40px 36px;
+  transition:border-color .25s, background .25s;
+  position:relative;
+}
+.servicio__card:hover { border-color:var(--rosa); background:var(--beige); }
+.servicio__num {
+  font-family:var(--serif); font-size:32px; font-style:italic;
+  color:var(--rosa); opacity:.5; display:block; margin-bottom:16px;
+}
+.servicio__nombre {
+  font-family:var(--serif); font-size:21px; font-weight:600;
+  color:var(--negro); margin-bottom:10px; line-height:1.2;
+}
+.servicio__desc { font-size:14px; color:var(--gris); line-height:1.7; margin-bottom:20px; }
+.servicio__incluye { list-style:none; }
+.servicio__incluye li {
+  font-size:13px; color:var(--gris); padding:8px 0;
+  border-bottom:1px solid #ede8e2; display:flex; align-items:center; gap:10px;
+}
+.servicio__incluye li:last-child { border-bottom:none; }
+.servicio__incluye li::before { content:'✦'; color:var(--rosa); font-size:9px; flex-shrink:0; }
+.servicio__precio {
+  margin-top:24px; font-family:var(--serif); font-size:28px; font-weight:700;
+  color:var(--negro); display:block;
+}
+.servicio__precio em { font-size:14px; font-style:normal; font-weight:400; color:var(--gris); }
+.servicio__badge {
+  position:absolute; top:20px; right:20px;
+  font-size:10px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--negro); background:var(--durazno); padding:4px 10px; border-radius:1px;
+}
+.servicios__actualizado {
+  margin-top:32px; text-align:center;
+  font-size:12px; color:var(--gris); letter-spacing:.06em;
+}
+.servicios__link-valores {
+  display:inline-flex; align-items:center; gap:8px;
+  margin-top:40px; font-size:13px; font-weight:600;
+  letter-spacing:.08em; text-transform:uppercase;
+  color:var(--negro); text-decoration:none;
+  border-bottom:1.5px solid var(--negro); padding-bottom:2px;
+  transition:color .2s, border-color .2s;
+}
+.servicios__link-valores:hover { color:var(--rosa); border-color:var(--rosa); }
+
+/* ══════════════════════════════════════════
+   EBOOK PROMO
+══════════════════════════════════════════ */
+.ebook-promo {
+  background:var(--negro); padding:96px 0;
+  position:relative; overflow:hidden;
+}
+.ebook-promo::before {
+  content:''; position:absolute;
+  top:-80px; right:-80px; width:400px; height:400px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(232,180,184,.15) 0%, transparent 70%);
+  pointer-events:none;
+}
+.ebook-promo__inner {
+  max-width:760px; margin:0 auto; padding:0 28px;
+  display:grid; grid-template-columns:1fr 200px; gap:64px; align-items:center;
+}
+.ebook-promo__label { color:var(--rosa); margin-bottom:20px; }
+.ebook-promo__title {
+  font-family:var(--serif); font-size:clamp(26px,4vw,42px);
+  font-weight:600; color:var(--blanco); line-height:1.2; margin-bottom:16px;
+}
+.ebook-promo__title em { font-style:italic; color:var(--rosa); }
+.ebook-promo__desc { font-size:15px; color:#8a8078; line-height:1.7; margin-bottom:36px; max-width:420px; }
+.ebook-promo__cover {
+  width:200px; border-radius:6px; overflow:hidden;
+  box-shadow:20px 20px 48px rgba(0,0,0,.4);
+  flex-shrink:0;
+}
+.ebook-promo__cover img { width:100%; height:auto; display:block; }
+.ebook-promo__cover-placeholder {
+  width:200px; height:280px; border-radius:6px;
+  background:linear-gradient(145deg,#2a2020,#1a1a1a);
+  display:flex; align-items:center; justify-content:center;
+  font-size:48px; box-shadow:20px 20px 48px rgba(0,0,0,.4);
+}
+
+/* ══════════════════════════════════════════
+   CONTACTO
+══════════════════════════════════════════ */
+.contacto { background:var(--beige); padding:96px 0; }
+.contacto__title {
+  font-family:var(--serif); font-size:clamp(28px,4vw,44px);
+  font-weight:600; line-height:1.2; margin-bottom:12px;
+}
+.contacto__sub { font-size:16px; color:var(--gris); line-height:1.6; margin-bottom:52px; max-width:440px; }
+.contacto__grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.contacto__card {
+  background:var(--blanco); border:1.5px solid #ede8e2;
+  border-radius:4px; padding:32px 28px;
+  display:flex; flex-direction:column; align-items:flex-start; gap:16px;
+  text-decoration:none; color:var(--negro);
+  transition:border-color .25s, transform .2s, box-shadow .2s;
+}
+.contacto__card:hover {
+  border-color:var(--rosa); transform:translateY(-4px);
+  box-shadow:0 16px 40px rgba(15,15,15,.07);
+}
+.contacto__card-icon {
+  width:44px; height:44px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+}
+.contacto__card-icon svg { width:22px; height:22px; }
+.contacto__card-icon--wpp { background:#dcf8e1; }
+.contacto__card-icon--ig { background:#fde8f0; }
+.contacto__card-icon--tt { background:#f0f0f0; }
+.contacto__card-icon--forms { background:#e8eef8; }
+.contacto__card-plataforma {
+  font-size:11px; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--gris); display:block; margin-bottom:2px;
+}
+.contacto__card-accion {
+  font-family:var(--serif); font-size:18px; font-weight:600; color:var(--negro);
+}
+.contacto__card-desc { font-size:13px; color:var(--gris); line-height:1.5; }
+.contacto__card-arrow { margin-top:auto; font-size:18px; color:var(--rosa); }
+
+/* ══════════════════════════════════════════
+   CTA FINAL
+══════════════════════════════════════════ */
+.cta-final {
+  background:var(--blanco); text-align:center; padding:120px 24px;
+  position:relative; overflow:hidden;
+}
+.cta-final::before {
+  content:''; position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%); width:600px; height:600px;
+  border-radius:50%; border:1px solid var(--rosa); opacity:.15; pointer-events:none;
+}
+.cta-final::after {
+  content:''; position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%); width:950px; height:950px;
+  border-radius:50%; border:1px solid var(--rosa); opacity:.07; pointer-events:none;
+}
+.cta-final__label { font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--gris); display:block; margin-bottom:24px; }
+.cta-final__title {
+  font-family:var(--serif); font-size:clamp(30px,5vw,54px);
+  font-weight:700; line-height:1.1; color:var(--negro);
+  max-width:540px; margin:0 auto 44px;
+}
+.cta-final__title em { font-style:italic; color:var(--gris); }
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer {
+  padding:40px 28px; background:var(--negro);
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+}
+.footer__logo { font-family:var(--serif); font-size:18px; font-weight:700; color:var(--blanco); }
+.footer__logo em { font-style:italic; font-weight:400; color:rgba(255,255,255,.4); }
+footer p { font-size:12px; color:rgba(255,255,255,.3); }
+.footer__social { display:flex; gap:16px; }
+.footer__social a {
+  font-size:12px; letter-spacing:.1em; text-transform:uppercase;
+  color:rgba(255,255,255,.4); text-decoration:none; transition:color .2s;
+}
+.footer__social a:hover { color:var(--rosa); }
+
+/* ══════════════════════════════════════════
+   MODAL LIGHTBOX
+══════════════════════════════════════════ */
+.lightbox {
+  position:fixed; inset:0; z-index:200; background:rgba(15,15,15,.92);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none; transition:opacity .3s;
+}
+.lightbox.open { opacity:1; pointer-events:all; }
+.lightbox__close {
+  position:absolute; top:24px; right:28px;
+  font-size:28px; color:rgba(255,255,255,.6); cursor:pointer;
+  background:none; border:none; line-height:1; transition:color .2s;
+}
+.lightbox__close:hover { color:var(--blanco); }
+.lightbox__img { max-width:90vw; max-height:85vh; border-radius:4px; display:block; }
+
+/* ══════════════════════════════════════════
+   SVG DEFS (Instagram gradient)
+══════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 800px) {
+  .sobre-intro__inner { grid-template-columns:1fr; gap:32px; text-align:center; }
+  .sobre-intro__foto { width:160px; height:210px; margin:0 auto; }
+  .sobre-intro__tags { justify-content:center; }
+  .ebook-promo__inner { grid-template-columns:1fr; gap:36px; text-align:center; }
+  .ebook-promo__cover, .ebook-promo__cover-placeholder { margin:0 auto; }
+  .ebook-promo__desc { margin-left:auto; margin-right:auto; }
+  .servicios__grid { grid-template-columns:1fr; }
+  .contacto__grid { grid-template-columns:1fr 1fr; }
+  .galeria__grid { grid-template-columns:1fr 1fr; }
+  .galeria__cell--wide { grid-column:span 1; }
+  footer { flex-direction:column; text-align:center; align-items:center; }
+  .nav__links { display:none; }
+  .nav__hamburger { display:flex; }
+}
+@media (max-width: 520px) {
+  .contacto__grid { grid-template-columns:1fr; }
+  .galeria__grid { grid-template-columns:1fr 1fr; }
+  .galeria__cell--tall { grid-row:span 1; }
+  .carrusel__item { width:240px; height:300px; }
+  nav { padding:16px 20px; }
+}
+
+/* mobile nav open */
+nav.menu-open .nav__links {
+  display:flex; flex-direction:column; gap:0;
+  position:fixed; inset:0; top:0; background:var(--beige);
+  justify-content:center; align-items:center;
+  z-index:99; padding:40px;
+}
+nav.menu-open .nav__links a { font-size:22px; opacity:1; padding:16px 0; }
+nav.menu-open .nav__hamburger span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+nav.menu-open .nav__hamburger span:nth-child(2) { opacity:0; }
+nav.menu-open .nav__hamburger span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+</style>
+</head>
+<body>
+
+<!-- SVG defs -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden">
+  <defs>
+    <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%"   style="stop-color:#f09433"/>
+      <stop offset="25%"  style="stop-color:#e6683c"/>
+      <stop offset="50%"  style="stop-color:#dc2743"/>
+      <stop offset="75%"  style="stop-color:#cc2366"/>
+      <stop offset="100%" style="stop-color:#bc1888"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ══ NAV ══ -->
+<nav id="mainNav">
+  <a href="#" class="nav__logo">Maquilla<em>tina</em></a>
+  <div class="nav__links">
+    <a href="#trabajos">Trabajos</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#sobre-mi">Sobre mí</a>
+    <a href="#contacto" class="nav__cta">Reservar turno</a>
+  </div>
+  <button class="nav__hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="inicio">
+  <div class="hero__inner">
+    <span class="hero__eyebrow">Maquilladora · Buenos Aires</span>
+    <h1 class="hero__title">Agustina<br/><em>Costa</em></h1>
+    <p class="hero__subtitle">Maquilladora Profesional & Educadora</p>
+    <div class="hero__divider"></div>
+    <p class="hero__desc">
+      Realzo tu belleza natural con técnicas profesionales. Disponible para eventos, sesiones y a domicilio en Buenos Aires.
+    </p>
+    <div class="hero__btns">
+      <a href="#contacto" class="btn btn--negro">Reservar turno</a>
+      <a href="#trabajos" class="btn btn--outline">Ver trabajos</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SOBRE MÍ ══ -->
+<section class="sobre-intro" id="sobre-mi">
+  <div class="sobre-intro__inner">
+    <div class="sobre-intro__foto reveal">
+      <img src="img/13.JPEG" alt="Agustina Costa — Maquillatina"/>
+    </div>
+    <div class="reveal">
+      <span class="section-label">Quién soy</span>
+      <h2 class="sobre-intro__name">Agustina Costa</h2>
+      <span class="sobre-intro__handle">@maquillatina</span>
+      <p class="sobre-intro__bio">
+        Soy maquilladora profesional y estudiante de Cosmetología en la UBA. Mi trabajo está guiado por un enfoque educativo y 100% personalizado: no existen recetas únicas, sino técnicas que se adaptan a cada persona.
+        <br/><br/>
+        Trabajo a domicilio y en estudio. Cada maquillaje es un proceso cuidado, desde la preparación de la piel hasta el producto final.
+      </p>
+      <div class="sobre-intro__tags">
+        <span class="sobre-intro__tag">Maquillaje a domicilio</span>
+        <span class="sobre-intro__tag">Eventos & sesiones</span>
+        <span class="sobre-intro__tag">CABA · GBA</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CARRUSEL ══ -->
+<section class="carrusel-section" id="trabajos">
+  <div class="carrusel-section__header">
+    <span class="section-label section-label--rosa reveal">Portfolio</span>
+    <h2 class="carrusel-section__title reveal">Algunos de mis trabajos</h2>
+  </div>
+
+  <div class="carrusel" id="carrusel">
+    <div class="carrusel__item reveal">
+      <img src="img/11.JPG" alt="Maquillaje natural"/>
+      <div class="carrusel__overlay"><p class="carrusel__overlay-text">Maquillaje natural<br/>y luminoso</p></div>
+    </div>
+
+    <div class="carrusel__item reveal">
+      <img src="img/6.jfif" alt="Look ahumado"/>
+      <div class="carrusel__overlay"><p class="carrusel__overlay-text">Ahumado clásico<br/>con labio nude</p></div>
+    </div>
+
+    <div class="carrusel__item reveal">
+      <img src="img/29.jfif" alt="Look plateado"/>
+      <div class="carrusel__overlay"><p class="carrusel__overlay-text">Look glam<br/>plateado</p></div>
+    </div>
+
+      <div class="carrusel__item reveal">
+      <img src="img/7.jfif" alt="Look azul artístico"/>
+      <div class="carrusel__overlay"><p class="carrusel__overlay-text">Look artístico<br/>azul & plateado</p></div>
+    </div>
+
+    <div class="carrusel__item reveal">
+      <img src="img/26.jpg" alt="Look naranja editorial"/>
+      <div class="carrusel__overlay"><p class="carrusel__overlay-text">Look editorial<br/></p></div>
+    </div>
+    <div class="carrusel__item reveal">
+      <img src="img/22.JPEG" alt="Look smoky dorado"/>
+      <div class="carrusel__overlay"><p class="carrusel__overlay-text">Smoky dorado<br/>con detalles</p></div>
+    </div>
+ 
+    <div class="carrusel__item reveal">
+      <img src="img/30.jfif" alt="Look plateado noche"/>
+      <div class="carrusel__overlay"><p class="carrusel__overlay-text">Glam de noche<br/>plateado</p></div>
+    </div>
+    <div class="carrusel__item reveal">
+      <img src="img/5.JPG" alt="Look rosa"/>
+      <div class="carrusel__overlay"><p class="carrusel__overlay-text">Look rosa<br/>romántico</p></div>
+    </div>
+  </div>
+
+  <div class="carrusel__dots" id="carruselDots">
+    <button class="carrusel__dot active"></button>
+    <button class="carrusel__dot"></button>
+    <button class="carrusel__dot"></button>
+    <button class="carrusel__dot"></button>
+    <button class="carrusel__dot"></button>
+    <button class="carrusel__dot"></button>
+    <button class="carrusel__dot"></button>
+    <button class="carrusel__dot"></button>
+  </div>
+</section>
+
+<!-- ══ GALERÍA GRID ══ -->
+<section class="galeria">
+  <div class="galeria__header reveal">
+    <span class="section-label">Galería</span>
+    <h2 class="galeria__title">Mis trabajos, de cerca</h2>
+  </div>
+  <div class="galeria__grid container--wide reveal">
+
+    <!-- Celda tall izquierda -->
+    <div class="galeria__cell galeria__cell--tall">
+      <img src="img/1.jfif" alt="1"/>
+    </div>
+
+    <!-- Columna derecha top -->
+    <div class="galeria__cell">
+      <img src="img/2.jfif" alt="2"/>
+    </div>
+    <div class="galeria__cell">
+      <img src="img/3.jfif" alt="3"/>
+    </div>
+
+    <!-- Fila ancha -->
+    <div class="galeria__cell galeria__cell--wide">
+      <img src="img/4.JPEG" alt="4"/>
+    </div>
+
+    <!-- Fila inferior -->
+    <div class="galeria__cell">
+      <img src="img/24.JPG" alt="5"/>
+    </div>
+    <div class="galeria__cell">
+      <img src="img/23.jpg" alt="6"/>
+    </div>
+    <div class="galeria__cell">
+      <img src="img/28.JPEG" alt="7"/>
+    </div>
+
+    <!-- Segunda fila ancha -->
+    <div class="galeria__cell galeria__cell--wide">
+      <img src="img/8.jfif" alt="8"/>
+    </div>
+
+    <div class="galeria__cell">
+      <img src="img/9.jfif" alt="9"/>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ SERVICIOS ══ -->
+<section class="servicios section" id="servicios">
+  <div class="container">
+    <div class="servicios__header reveal">
+      <span class="section-label">Servicios</span>
+      <h2 class="servicios__title">Lo que ofrezco</h2>
+      <p class="servicios__nota">Los precios se actualizan periódicamente. Consultá por el valor vigente.</p>
+    </div>
+    <div class="servicios__grid reveal">
+
+      <div class="servicio__card">
+        <span class="servicio__badge">Popular</span>
+        <span class="servicio__num">01</span>
+        <h3 class="servicio__nombre">Maquillaje Social</h3>
+        <p class="servicio__desc">Para cumpleaños, quinciañeras, salidas, eventos de todo tipo. Resultado natural y duradero, adaptado a tu estilo.</p>
+        <ul class="servicio__incluye">
+          <li>Preparación de la piel con productos hipoalergénicos aptos para todas las pieles que aseguraran la duración del maquillaje.</li>
+          <li>Maquillajes nacionales e importados, hipoalergénicos y de uso profesional </li>
+          <li>Pestañas, piedras y glitter en el caso de solicitarlos </li>
+        </ul>
+        <span class="servicio__precio">$90.000 <p>Consulta por el valor de la prueba</p><em>valor vigente</em></span>
+      </div>
+
+      <div class="servicio__card">
+        <span class="servicio__num">02</span>
+        <h3 class="servicio__nombre">Novias</h3>
+        <p class="servicio__desc">Te acompaño en tu día más especial.</p>
+        <ul class="servicio__incluye">
+          <li>Incluye todo lo mencionado anteriormente en el maquillaje social</li>
+          <li>Limpieza de cutis previa al evento</li>
+          <li>Kit de retoque</li>
+          <li>Prueba de maquillaje</li>
+        </ul>
+        <span class="servicio__precio">$190.000 <em>valor vigente</em></span>
+      </div>
+
+      <div class="servicio__card">
+        <span class="servicio__badge">Especial</span>
+        <span class="servicio__num">03</span>
+        <h3 class="servicio__nombre">Clases de Automaquillaje</h3>
+        <p class="servicio__desc">Aprende a maquillarte conmigo en una clase personalizada.</p>
+        <ul class="servicio__incluye">
+          <li> A domicilio o virtual</li>
+          <li> Sábados y domingos</li>
+          <li> 3 horas de clase</li>
+          <li>100% personalizada</li>
+        </ul>
+        <span class="servicio__precio">$80.000 <em>paquete completo</em></span>
+      </div>
+
+      <div class="servicio__card">
+        <span class="servicio__num">04</span>
+        <h3 class="servicio__nombre">Sesión de Fotos</h3>
+        <p class="servicio__desc">Maquillaje pensado para cámara. Técnica de alta definición para que tus fotos queden perfectas.</p>
+        <ul class="servicio__incluye">
+          <li>Adaptado a iluminación</li>
+          <li>Técnica HD / editorial</li>
+          <li>Retoque entre tomas</li>
+          <li>Disponible en estudio o locación</li>
+        </ul>
+        <span class="servicio__precio">Consultar <em>valor vigente</em></span>
+      </div>
+
+    </div>
+
+   
+
+  </div>
+</section>
+
+<!-- ══ EBOOK PROMO ══ -->
+<section class="ebook-promo">
+  <div class="ebook-promo__inner">
+    <div class="reveal">
+      <span class="section-label section-label--rosa ebook-promo__label">También creé</span>
+      <h2 class="ebook-promo__title">
+        Aprendé a maquillarte <em>desde cero</em>
+      </h2>
+      <p class="ebook-promo__desc">
+        Creé un ebook completo para que cualquier persona pueda aprender a maquillarse entendiendo el por qué de cada técnica. Sin tutoriales confusos, sin productos de más.
+      </p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="https://maquillatina.netlify.app/" target="_blank" class="btn btn--rosa">Ver el ebook</a>
+        <a href="https://maquillatina.netlify.app/" target="_blank" class="btn btn--outline-blanco">Saber más</a>
+      </div>
+    </div>
+    <div class="reveal">
+<div class="ebook-promo__cover">
+  <img src="img/ortada-ebook.jpg (1).png" alt="Automaquillaje Inicial"/>
+</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACTO ══ -->
+<section class="contacto section" id="contacto">
+  <div class="container">
+    <span class="section-label reveal">Contacto</span>
+    <h2 class="contacto__title reveal">¿Hablamos?</h2>
+    <p class="contacto__sub reveal">
+      Escribime por donde más cómoda te sientas. Respondo rápido 💬
+    </p>
+    <div class="contacto__grid reveal">
+
+      <!-- WhatsApp -->
+      <a href="https://wa.me/5491166240209" target="_blank" rel="noopener" class="contacto__card">
+        <div class="contacto__card-icon contacto__card-icon--wpp">
+          <svg viewBox="0 0 24 24" fill="#25D366">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.558 4.116 1.534 5.836L0 24l6.341-1.513A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.79 9.79 0 01-5.032-1.387l-.36-.214-3.765.898.939-3.668-.235-.376A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/>
+          </svg>
+        </div>
+        <div>
+          <span class="contacto__card-plataforma">WhatsApp</span>
+          <span class="contacto__card-accion">Escribime</span>
+        </div>
+        <p class="contacto__card-desc">Para turnos, consultas y presupuestos rápidos.</p>
+        <span class="contacto__card-arrow">→</span>
+      </a>
+
+      <!-- Instagram -->
+      <a href="https://instagram.com/maquillatina" target="_blank" rel="noopener" class="contacto__card">
+        <div class="contacto__card-icon contacto__card-icon--ig">
+          <svg viewBox="0 0 24 24" fill="url(#ig-grad)">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+          </svg>
+        </div>
+        <div>
+          <span class="contacto__card-plataforma">Instagram</span>
+          <span class="contacto__card-accion">Seguime</span>
+        </div>
+        <p class="contacto__card-desc">Mirá mis trabajos y novedades día a día.</p>
+        <span class="contacto__card-arrow">→</span>
+      </a>
+
+      <!-- TikTok -->
+      <a href="https://tiktok.com/@maquillatina" target="_blank" rel="noopener" class="contacto__card">
+        <div class="contacto__card-icon contacto__card-icon--tt">
+          <svg viewBox="0 0 24 24" fill="#0F0F0F">
+            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.19 8.19 0 004.79 1.53V6.75a4.85 4.85 0 01-1.02-.06z"/>
+          </svg>
+        </div>
+        <div>
+          <span class="contacto__card-plataforma">TikTok</span>
+          <span class="contacto__card-accion">Encontrame</span>
+        </div>
+        <p class="contacto__card-desc">Contenido educativo y behind the scenes de mis trabajos.</p>
+        <span class="contacto__card-arrow">→</span>
+      </a>
+
+    
+</section>
+
+<!-- ══ CTA FINAL ══ -->
+<section class="cta-final">
+  <span class="cta-final__label reveal">¿Lista?</span>
+  <h2 class="cta-final__title reveal">Tu mejor versión <em>empieza acá</em>.</h2>
+  <a href="https://wa.me/5491166240209" target="_blank" class="btn btn--negro reveal">Reservar mi turno</a>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <span class="footer__logo">Maquilla<em>tina</em></span>
+  <p>© 2025 Agustina Costa · Todos los derechos reservados</p>
+  <div class="footer__social">
+    <a href="https://instagram.com/maquillatina" target="_blank">Instagram</a>
+    <a href="https://tiktok.com/@maquillatina" target="_blank">TikTok</a>
+    <a href="https://maquillatina.netlify.app/" target="_blank">Ebook</a>
+  </div>
+</footer>
+
+<!-- ══ LIGHTBOX ══ -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox__close" id="lightboxClose">✕</button>
+  <img class="lightbox__img" id="lightboxImg" src="" alt=""/>
+</div>
+
+<script>
+/* ── Scroll reveal ── */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      e.target.style.transitionDelay = (i % 4) * 80 + 'ms';
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ── Nav scroll ── */
+const mainNav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  mainNav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+/* ── Hamburger ── */
+const hamburger = document.getElementById('hamburger');
+hamburger.addEventListener('click', () => {
+  mainNav.classList.toggle('menu-open');
+});
+mainNav.querySelectorAll('.nav__links a').forEach(a => {
+  a.addEventListener('click', () => mainNav.classList.remove('menu-open'));
+});
+
+/* ── Carrusel dots ── */
+const carrusel = document.getElementById('carrusel');
+const dots = document.querySelectorAll('.carrusel__dot');
+if (carrusel && dots.length) {
+  carrusel.addEventListener('scroll', () => {
+    const scrollLeft = carrusel.scrollLeft;
+    const itemWidth = carrusel.querySelector('.carrusel__item')?.offsetWidth + 12 || 292;
+    const idx = Math.round(scrollLeft / itemWidth);
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  });
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      const itemWidth = carrusel.querySelector('.carrusel__item')?.offsetWidth + 12 || 292;
+      carrusel.scrollTo({ left: i * itemWidth, behavior: 'smooth' });
+    });
+  });
+}
+
+/* ── Lightbox ── */
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+document.querySelectorAll('.galeria__cell, .carrusel__item').forEach(cell => {
+  cell.addEventListener('click', () => {
+    const img = cell.querySelector('img');
+    if (img) {
+      lightboxImg.src = img.src;
+      lightbox.classList.add('open');
+    }
+  });
+});
+document.getElementById('lightboxClose').addEventListener('click', () => lightbox.classList.remove('open'));
+lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('open'); });
+</script>
+</body>
+</html>
