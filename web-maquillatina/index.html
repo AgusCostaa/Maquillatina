@@ -70,10 +70,35 @@ body {
    NAV
 ══════════════════════════════════════════ */
 nav {
-  position: fixed; top:0; left:0; right:0; z-index:100;
+  position: fixed; top:40px; left:0; right:0; z-index:100;
   padding: 20px 28px;
   display:flex; align-items:center; justify-content:space-between;
   transition: background .3s, box-shadow .3s;
+}
+
+/* ══ BARRA DE ANUNCIO ══ */
+.anuncio-bar {
+  position:fixed; top:0; left:0; right:0; z-index:101;
+  background:var(--negro);
+}
+.anuncio-bar a {
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  flex-wrap:wrap; text-align:center;
+  padding:11px 28px; text-decoration:none;
+}
+.anuncio-bar__tag {
+  font-size:10px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--negro); background:var(--durazno); padding:3px 9px; border-radius:1px;
+  flex-shrink:0;
+}
+.anuncio-bar__texto {
+  font-size:13px; color:var(--blanco); letter-spacing:.01em;
+}
+.anuncio-bar__flecha { display:inline-block; transition:transform .2s; }
+.anuncio-bar a:hover .anuncio-bar__flecha { transform:translateX(4px); }
+@media (max-width:600px){
+  .anuncio-bar a { padding:10px 20px; }
+  .anuncio-bar__texto { font-size:12px; }
 }
 nav.scrolled {
   background: rgba(242,237,231,0.96);
@@ -311,6 +336,42 @@ nav.scrolled {
   margin-top:12px; font-size:14px; color:var(--gris); line-height:1.6;
 }
 .servicios__grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; }
+
+/* ══ DESTACADO: Plan piel + maquillaje ══ */
+.destacado {
+  margin-top:56px; border:1.5px solid var(--durazno); background:var(--beige);
+  padding:48px 40px; position:relative;
+}
+.destacado .servicio__badge { position:static; display:inline-block; margin-bottom:16px; }
+.destacado__grid { display:grid; grid-template-columns:1.2fr 1fr; gap:48px; margin-top:32px; }
+.pasos { list-style:none; border-left:2px solid var(--rosa); padding-left:24px; }
+.pasos li { position:relative; padding-bottom:28px; }
+.pasos li:last-child { padding-bottom:0; }
+.pasos li::before {
+  content:''; position:absolute; left:-29px; top:4px; width:9px; height:9px;
+  border-radius:50%; background:var(--rosa);
+}
+.pasos li strong { display:block; font-family:var(--serif); font-size:16px; font-weight:600; color:var(--negro); margin-bottom:4px; }
+.pasos li span { font-size:13.5px; color:var(--gris); line-height:1.6; }
+.mini {
+  display:block; font-size:11px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--gris); margin:20px 0 6px;
+}
+.mini:first-of-type { margin-top:0; }
+.txt { font-size:13.5px; color:var(--gris); line-height:1.6; }
+.servicio__link {
+  display:inline-block; margin-top:16px; font-size:12px; font-weight:600;
+  letter-spacing:.06em; text-transform:uppercase; color:var(--negro);
+  border-bottom:1.5px solid var(--rosa); padding-bottom:2px; text-decoration:none;
+}
+.servicio__link:hover { color:var(--rosa); }
+.acciones { display:flex; gap:12px; flex-wrap:wrap; margin-top:28px; }
+@media (max-width:860px) {
+  .destacado__grid { grid-template-columns:1fr; }
+}
+@media (max-width:600px) {
+  .destacado { padding:36px 24px; }
+}
 .servicio__card {
   border:1.5px solid #ede8e2; padding:40px 36px;
   transition:border-color .25s, background .25s;
@@ -535,6 +596,32 @@ nav.menu-open .nav__links a { font-size:22px; opacity:1; padding:16px 0; }
 nav.menu-open .nav__hamburger span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
 nav.menu-open .nav__hamburger span:nth-child(2) { opacity:0; }
 nav.menu-open .nav__hamburger span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+
+/* ══ GALERÍA VERTICAL (override) ══ */
+.galeria__grid {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.galeria__cell,
+.galeria__cell--tall,
+.galeria__cell--wide {
+  grid-row: auto;
+  grid-column: auto;
+  min-height: 0;
+  aspect-ratio: 4 / 5;
+}
+.galeria__cell img,
+.galeria__cell--wide img {
+  object-position: center top;
+}
+
+@media (max-width: 800px) {
+  .galeria__grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 520px) {
+  .galeria__grid { grid-template-columns: 1fr 1fr; }
+  .galeria__cell--tall { grid-row: auto; }
+}
 </style>
 </head>
 <body>
@@ -551,6 +638,14 @@ nav.menu-open .nav__hamburger span:nth-child(3) { transform:translateY(-6.5px) r
     </linearGradient>
   </defs>
 </svg>
+
+<!-- ══ BARRA DE ANUNCIO ══ -->
+<div class="anuncio-bar">
+  <a href="#plan-piel">
+    <span class="anuncio-bar__tag">Nuevo</span>
+    <span class="anuncio-bar__texto">Plan de piel + maquillaje para tu evento. Conocelo <span class="anuncio-bar__flecha">→</span></span>
+  </a>
+</div>
 
 <!-- ══ NAV ══ -->
 <nav id="mainNav">
@@ -619,31 +714,26 @@ nav.menu-open .nav__hamburger span:nth-child(3) { transform:translateY(-6.5px) r
       <img src="img/11.JPG" alt="Maquillaje natural"/>
       <div class="carrusel__overlay"><p class="carrusel__overlay-text">Maquillaje natural<br/>y luminoso</p></div>
     </div>
-
+    <div class="carrusel__item reveal">
+      <img src="img/34.jpg" alt="Abuelas y madrinas"/>
+      <div class="carrusel__overlay"><p class="carrusel__overlay-text">Abuelas y <br/> Madrinas </p></div>
+    </div>
+    <div class="carrusel__item reveal">
+      <img src="img/37.jpg" alt="Smokey eye marron"/>
+      <div class="carrusel__overlay"><p class="carrusel__overlay-text">Smokey Eye <br/>Tonos marrones </p></div>
+    </div>
+    <div class="carrusel__item reveal">
+      <img src="img/32.jpg" alt="Tonos frios"/>
+      <div class="carrusel__overlay"><p class="carrusel__overlay-text">Esfumado en <br/>tonos grises</p></div>
+    </div>
     <div class="carrusel__item reveal">
       <img src="img/6.jfif" alt="Look ahumado"/>
       <div class="carrusel__overlay"><p class="carrusel__overlay-text">Ahumado clásico<br/>con labio nude</p></div>
     </div>
-
     <div class="carrusel__item reveal">
-      <img src="img/29.jfif" alt="Look plateado"/>
-      <div class="carrusel__overlay"><p class="carrusel__overlay-text">Look glam<br/>plateado</p></div>
-    </div>
-
-      <div class="carrusel__item reveal">
       <img src="img/7.jfif" alt="Look azul artístico"/>
       <div class="carrusel__overlay"><p class="carrusel__overlay-text">Look artístico<br/>azul & plateado</p></div>
     </div>
-
-    <div class="carrusel__item reveal">
-      <img src="img/26.jpg" alt="Look naranja editorial"/>
-      <div class="carrusel__overlay"><p class="carrusel__overlay-text">Look editorial<br/></p></div>
-    </div>
-    <div class="carrusel__item reveal">
-      <img src="img/22.JPEG" alt="Look smoky dorado"/>
-      <div class="carrusel__overlay"><p class="carrusel__overlay-text">Smoky dorado<br/>con detalles</p></div>
-    </div>
- 
     <div class="carrusel__item reveal">
       <img src="img/30.jfif" alt="Look plateado noche"/>
       <div class="carrusel__overlay"><p class="carrusel__overlay-text">Glam de noche<br/>plateado</p></div>
@@ -676,7 +766,7 @@ nav.menu-open .nav__hamburger span:nth-child(3) { transform:translateY(-6.5px) r
 
     <!-- Celda tall izquierda -->
     <div class="galeria__cell galeria__cell--tall">
-      <img src="img/1.jfif" alt="1"/>
+      <img src="img/36.jpg" alt="1"/>
     </div>
 
     <!-- Columna derecha top -->
@@ -735,7 +825,7 @@ nav.menu-open .nav__hamburger span:nth-child(3) { transform:translateY(-6.5px) r
           <li>Maquillajes nacionales e importados, hipoalergénicos y de uso profesional </li>
           <li>Pestañas, piedras y glitter en el caso de solicitarlos </li>
         </ul>
-        <span class="servicio__precio">$90.000 <p>Consulta por el valor de la prueba</p><em>valor vigente</em></span>
+        <span class="servicio__precio">$95.000 <em>valor vigente</em></span>
       </div>
 
       <div class="servicio__card">
@@ -762,7 +852,7 @@ nav.menu-open .nav__hamburger span:nth-child(3) { transform:translateY(-6.5px) r
           <li> 3 horas de clase</li>
           <li>100% personalizada</li>
         </ul>
-        <span class="servicio__precio">$80.000 <em>paquete completo</em></span>
+        <span class="servicio__precio">$150.000 <em>paquete completo</em></span>
       </div>
 
       <div class="servicio__card">
@@ -780,34 +870,45 @@ nav.menu-open .nav__hamburger span:nth-child(3) { transform:translateY(-6.5px) r
 
     </div>
 
+    <div class="destacado reveal" id="plan-piel">
+      <span class="servicio__badge">Nuevo</span>
+      <span class="section-label">Plan piel + maquillaje · a domicilio</span>
+      <h2 class="servicios__title" style="max-width:640px">Llegá al gran día con la piel preparada</h2>
+      <p class="servicio__desc" style="max-width:600px;margin-top:12px">Un tratamiento en 3 encuentros durante los meses previos a tu evento, y el día D me ocupo de tu maquillaje definitivo, sobre una piel que ya trabajamos juntas.</p>
+      <div class="destacado__grid">
+        <ol class="pasos">
+          <li><strong>Encuentro 1 — Análisis y plan personalizado</strong><span>Nos conocemos, analizamos el estado de tu piel y armamos un plan a tu medida. Hacemos la limpieza facial inicial y te doy recomendaciones de productos para usar durante los 3 meses previos al evento.</span></li>
+          <li><strong>Encuentro 2 — Segunda parte del tratamiento</strong><span>Continuamos el plan según cómo fue respondiendo tu piel, ajustando lo que haga falta.</span></li>
+          <li><strong>Encuentro 3 — Prueba de maquillaje y cierre</strong><span>Hacemos la prueba de maquillaje para definir el look, y después la limpieza facial y la última sesión del tratamiento.</span></li>
+          <li><strong>Día del evento — Maquillaje definitivo</strong><span>Nos encontramos por última vez para el maquillaje del gran día, con tu piel ya preparada durante los meses previos.</span></li>
+        </ol>
+        <div>
+          <span class="servicio__precio" style="margin-top:0">$290.000 <em>+ viáticos</em></span>
+          <p class="txt" style="margin-top:6px">Los viáticos son obligatorios y se suman al valor.</p>
+          <span class="mini">Qué incluye</span>
+          <ul class="servicio__incluye"><li>3 encuentros de tratamiento con limpieza facial inicial y de cierre</li><li>Plan y recomendaciones de productos para 3 meses</li><li>Prueba de maquillaje</li><li>Maquillaje del día del evento</li></ul>
+          <span class="mini">Qué no incluye</span>
+          <p class="txt">Los cosméticos para que uses los meses previos al evento son un adicional opcional. Te recomiendo qué usar, pero no estás obligada a comprarme nada. Podés conseguirlos por tu cuenta.</p>
+          <span class="mini">Para quién es</span>
+          <p class="txt">Para cualquier evento con fecha fija: 15 años, casamientos, egresados, cumpleaños. Lo ideal es empezar unos 3 meses antes.</p>
+          <span class="mini">Dónde nos vemos</span>
+          <p class="txt">Voy a tu domicilio. Solo necesito un lugar cómodo para recostarte: un sillón o tu cama están perfectos.</p>
+          <span class="mini">Cómo reservar</span>
+          <p class="txt">Escribime por WhatsApp o Instagram con la fecha de tu evento y coordinamos.</p>
+          <div class="acciones">
+            <a href="https://wa.me/5491166240209?text=Hola!%20Quiero%20consultar%20por%20el%20plan%20piel%20y%20maquillaje.%20La%20fecha%20de%20mi%20evento%20es%3A%20" target="_blank" rel="noopener" class="btn btn--negro">Reservar por WhatsApp</a>
+            <a href="https://instagram.com/maquillatina" target="_blank" rel="noopener" class="btn btn--outline">Instagram</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
    
 
   </div>
 </section>
 
-<!-- ══ EBOOK PROMO ══ -->
-<section class="ebook-promo">
-  <div class="ebook-promo__inner">
-    <div class="reveal">
-      <span class="section-label section-label--rosa ebook-promo__label">También creé</span>
-      <h2 class="ebook-promo__title">
-        Aprendé a maquillarte <em>desde cero</em>
-      </h2>
-      <p class="ebook-promo__desc">
-        Creé un ebook completo para que cualquier persona pueda aprender a maquillarse entendiendo el por qué de cada técnica. Sin tutoriales confusos, sin productos de más.
-      </p>
-      <div style="display:flex; gap:12px; flex-wrap:wrap;">
-        <a href="https://maquillatina.netlify.app/" target="_blank" class="btn btn--rosa">Ver el ebook</a>
-        <a href="https://maquillatina.netlify.app/" target="_blank" class="btn btn--outline-blanco">Saber más</a>
-      </div>
-    </div>
-    <div class="reveal">
-<div class="ebook-promo__cover">
-  <img src="img/ortada-ebook.jpg (1).png" alt="Automaquillaje Inicial"/>
-</div>
-    </div>
-  </div>
-</section>
+
 
 <!-- ══ CONTACTO ══ -->
 <section class="contacto section" id="contacto">
@@ -850,7 +951,7 @@ nav.menu-open .nav__hamburger span:nth-child(3) { transform:translateY(-6.5px) r
       </a>
 
       <!-- TikTok -->
-      <a href="https://tiktok.com/@maquillatina" target="_blank" rel="noopener" class="contacto__card">
+      <a href="https://tiktok.com/@maquilatina" target="_blank" rel="noopener" class="contacto__card">
         <div class="contacto__card-icon contacto__card-icon--tt">
           <svg viewBox="0 0 24 24" fill="#0F0F0F">
             <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.19 8.19 0 004.79 1.53V6.75a4.85 4.85 0 01-1.02-.06z"/>
